@@ -1,0 +1,20 @@
+-- Insertar datos en la tabla "usuarios"
+INSERT INTO usuarios (nombre, correo, fecha_nacimiento, activo)
+VALUES ('Juan Pérez', 'juan@example.com', '1990-05-15', true);
+
+INSERT INTO usuarios (nombre, correo, fecha_nacimiento, activo)
+VALUES ('María Gómez', 'maria@example.com', '1985-12-10', true);
+
+-- Insertar datos en la tabla "productos"
+INSERT INTO productos (nombre, precio, descripcion)
+VALUES ('Banquete básico', 100.00, 'Incluye entrante, plato principal y postre');
+
+INSERT INTO productos (nombre, precio, descripcion)
+VALUES ('Paquete premium', 200.00, 'Banquete completo con barra libre y música en vivo');
+
+-- Insertar datos en la tabla "pedidos"
+INSERT INTO pedidos (usuario_id, producto_id, cantidad)
+VALUES (1, 1, 100); -- Juan Pérez reservó el banquete básico para 100 personas
+
+INSERT INTO pedidos (usuario_id, producto_id, cantidad)
+VALUES (2, 2, 50); -- María Gómez reservó el paquete premium para 50 personas
