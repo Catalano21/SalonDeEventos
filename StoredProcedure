@@ -1,0 +1,36 @@
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertarEvento(
+    IN p_nombreEvento VARCHAR(100),
+    IN p_fechaEvento DATE,
+    IN p_numInvitados INT,
+    IN p_idCliente INT,
+    IN p_idProducto INT,
+    OUT p_idEvento INT
+)
+BEGIN
+    INSERT INTO eventos (nombreEvento, fechaEvento, numInvitados, idCliente, idProducto)
+    VALUES (p_nombreEvento, p_fechaEvento, p_numInvitados, p_idCliente, p_idProducto);
+    
+    SET p_idEvento = LAST_INSERT_ID();
+END //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_ObtenerEventoPorID(
+    IN p_idEvento INT
+)
+BEGIN
+    SELECT
+        e.*,
+        u.nombre AS nombreCliente,
+        p.nombre AS nombreProducto
+    FROM eventos e
+    INNER JOIN usuarios u ON e.idCliente = u.id
+    INNER JOIN productos p ON e.idProducto = p.id
+    WHERE e.id = p_idEvento;
+END //
+
+CALL sp_InsertarEvento('Boda de Ana y Carlos', '2023-10-15', 150, 1, 2, @idEventoCreado);
+
+CALL sp_ObtenerEventoPorID(1);
