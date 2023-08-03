@@ -1,0 +1,26 @@
+CREATE VIEW v_eventos_proximos AS
+SELECT *
+FROM eventos
+WHERE fechaEvento >= CURDATE()
+ORDER BY fechaEvento;
+
+CREATE VIEW v_clientes_eventos AS
+SELECT c.nombre AS nombre_cliente, e.nombreEvento AS nombre_evento, e.fechaEvento
+FROM eventos e
+INNER JOIN usuarios c ON e.idCliente = c.id;
+
+CREATE VIEW v_ingresos_eventos AS
+SELECT e.id AS id_evento, e.nombreEvento, SUM(p.precio) AS ingresos_totales
+FROM eventos e
+INNER JOIN productos p ON e.idProducto = p.id
+GROUP BY e.id, e.nombreEvento;
+
+CREATE VIEW v_espacios_disponibles AS
+SELECT *
+FROM espacios
+WHERE id NOT IN (SELECT DISTINCT idEspacio FROM eventos);
+
+CREATE VIEW v_eventos_mas_invitados AS
+SELECT *
+FROM eventos
+WHERE numInvitados = (SELECT MAX(numInvitados) FROM eventos);
