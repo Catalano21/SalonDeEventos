@@ -1,0 +1,39 @@
+CREATE TABLE eventos_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    evento_id INT,
+    accion VARCHAR(50),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (evento_id) REFERENCES eventos(id)
+);
+
+CREATE TABLE usuarios_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    accion VARCHAR(50),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER tr_eventos_insert
+AFTER INSERT ON eventos
+FOR EACH ROW
+BEGIN
+    INSERT INTO eventos_log (evento_id, accion)
+    VALUES (NEW.id, 'Inserción');
+END //
+
+DELIMITER ;
+
+  DELIMITER //
+
+CREATE TRIGGER tr_eventos_update
+AFTER UPDATE ON eventos
+FOR EACH ROW
+BEGIN
+    INSERT INTO eventos_log (evento_id, accion)
+    VALUES (NEW.id, 'Actualización');
+END //
+
+DELIMITER ;
