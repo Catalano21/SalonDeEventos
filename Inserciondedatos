@@ -1,0 +1,30 @@
+-- Inserción de datos en la tabla "usuarios"
+INSERT INTO usuarios (nombre, correo, fecha_nacimiento, activo)
+VALUES
+    ('Juan Pérez', 'juan@example.com', '1990-05-15', true),
+    ('María Gómez', 'maria@example.com', '1985-12-10', true);
+
+-- Inserción de datos en la tabla "productos"
+INSERT INTO productos (nombre, precio, descripcion)
+VALUES
+    ('Banquete básico', 100.00, 'Incluye entrante, plato principal y postre'),
+    ('Paquete premium', 200.00, 'Banquete completo con barra libre y música en vivo');
+
+-- Inserción de datos en la tabla "espacios"
+INSERT INTO espacios (nombre, capacidad_maxima)
+VALUES
+    ('Salón Principal', 150),
+    ('Sala de Conferencias', 50);
+
+-- Inserción de datos en la tabla "eventos"
+INSERT INTO eventos (nombreEvento, fechaEvento, numInvitados, idCliente, idProducto, idEspacio)
+VALUES
+    ('Boda de Ana y Carlos', '2023-10-15', 150, 1, 2, 1),
+    ('Fiesta de Cumpleaños', '2023-08-20', 60, 2, 1, 2);
+
+-- Inserción de datos en la tabla "productos_eventos"
+INSERT INTO productos_eventos (evento_id, producto_id, cantidad)
+VALUES
+    (1, 1, 150),
+    (1, 2, 1),
+    (2, 2, 60);
