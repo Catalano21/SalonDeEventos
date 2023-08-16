@@ -1,0 +1,57 @@
+-- Creación de Vistas
+CREATE VIEW v_eventos_proximos AS
+SELECT *
+FROM eventos
+WHERE fechaEvento >= CURDATE()
+ORDER BY fechaEvento;
+
+CREATE VIEW v_clientes_eventos AS
+SELECT c.nombre AS nombre_cliente, e.nombreEvento AS nombre_evento, e.fechaEvento
+FROM eventos e
+INNER JOIN usuarios c ON e.idCliente = c.id;
+
+-- Creación de Funciones
+DELIMITER //
+
+CREATE FUNCTION calcular_total_ingresos(evento_id INT) RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    SELECT SUM(p.precio)
+    INTO total
+    FROM productos_eventos pe
+    INNER JOIN productos p ON pe.producto_id = p.id
+    WHERE pe.evento_id = evento_id;
+    RETURN total;
+END //
+
+DELIMITER ;
+
+-- Creación de Stored Procedures
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertarEvento(
+    IN p_nombreEvento VARCHAR(100),
+    IN p_fechaEvento DATE,
+    IN p_numInvitados INT,
+    IN p_idCliente INT,
+    IN p_idProducto INT
+)
+BEGIN
+    INSERT INTO eventos (nombreEvento, fechaEvento, numInvitados, idCliente, idProducto)
+    VALUES (p_nombreEvento, p_fechaEvento, p_numInvitados, p_idCliente, p_idProducto);
+END //
+
+DELIMITER ;
+
+-- Creación de Triggers
+DELIMITER //
+
+CREATE TRIGGER tr_eventos_insert
+AFTER INSERT ON eventos
+FOR EACH ROW
+BEGIN
+    INSERT INTO eventos_log (evento_id, accion)
+    VALUES (NEW.id, 'Inserción');
+END //
+
+DELIMITER ;
