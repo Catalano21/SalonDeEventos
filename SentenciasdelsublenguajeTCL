@@ -1,0 +1,14 @@
+-- Comenzamos la transacción
+START TRANSACTION;
+
+-- Modificación 1: Actualizar la información de un evento existente
+UPDATE eventos
+SET numInvitados = 200
+WHERE id = 1;
+
+-- Modificación 2: Agregar un nuevo servicio a un evento existente
+INSERT INTO productos_eventos (evento_id, producto_id, cantidad)
+VALUES (1, 2, 3);
+
+-- Confirmamos los cambios y terminamos la transacción
+COMMIT;
