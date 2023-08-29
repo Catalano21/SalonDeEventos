@@ -1,0 +1,9 @@
+mysql -u root -p
+
+CREATE USER 'coderhouse'@'localhost' IDENTIFIED BY 'coderhouse';
+
+GRANT ALL PRIVILEGES ON nombre_base_datos.* TO 'coderhouse'@'localhost';
+
+FLUSH PRIVILEGES;
+
+EXIT;
