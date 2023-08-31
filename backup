@@ -1,0 +1,5 @@
+mysqldump -u salondeeventos -p salondeeventos > backup.sql
+
+mysql -u salondeeventos -p -e "CREATE DATABASE salondeeventos"
+
+mysql -u salondeeventos -p salondeeventos < backup.sql
